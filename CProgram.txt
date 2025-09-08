@@ -1,0 +1,308 @@
+#include <stdio.h>
+#include <conio.h>
+#include <limits.h>
+#include <math.h>
+
+------CoinChange------
+int min(int a, int b) {
+    return (a < b) ? a : b;}
+int coinChange(int coins[], int n, int amt) {
+    int C[20][20];
+    int i, j;
+    for (i=0;i<=n;i++) {
+	C[i][0] = 0;}
+    for (i=1;i<=n;i++) {
+	for (j=1;j<=amt;j++) {
+	    if (i==1 && j < coins[i-1]) {
+		C[i][j] = INT_MAX - 1;}
+	    else if (i==1 && j>=coins[i-1]) {
+		C[i][j] = 1 + C[i][j - coins[i-1]];}
+	    else if (j<coins[i-1]) {
+		C[i][j] = C[i-1][j];}
+	    else {
+		C[i][j] = min(C[i-1][j], 1 + C[i][j - coins[i-1]]);}}}
+    printf("\n ");
+    printf("      ");
+    for (j = 0; j <= amt; j++) {
+	printf("%4d", j);}
+    printf("\n");
+    for (i=1;i<=n;i++) {
+	printf("Coin%-2d", coins[i-1]);
+	for (j = 0; j <= amt; j++) {
+	    if (C[i][j] >= INT_MAX - 1)
+		printf("");
+	    else
+		printf("%4d", C[i][j]);}
+	printf("\n");}
+    return C[n][amt];
+}
+void main() {
+    int coins[20], n, amt, i, ans;
+    clrscr();
+    printf("Enter number of coins: ");
+    scanf("%d", &n);
+    printf("Enter coin values: ");
+    for (i=0;i<n;i++) {
+	scanf("%d",&coins[i]);
+    }
+    printf("Enter amount to make: ");
+    scanf("%d", &amt);
+    ans = coinChange(coins, n, amt);
+    if (ans >= INT_MAX - 1)
+	printf("\nNot possible to make amount %d with given coins\n", amt);
+    else
+	printf("\nMinimum coins required = %d\n", ans);
+    getch();}
+------Karatsuba------
+int karatsuba(int x, int y) {
+    if (x < 10 || y < 10)
+        return x * y;
+    int n = fmax(log10(x) + 1, log10(y) + 1);
+    int m = n / 2;
+    int high1 = x / (int)pow(10, m);
+    int low1  = x % (int)pow(10, m);
+    int high2 = y / (int)pow(10, m);
+    int low2  = y % (int)pow(10, m);
+    int z0 = karatsuba(low1, low2);
+    int z1 = karatsuba(low1 + high1, low2 + high2);
+    int z2 = karatsuba(high1, high2);
+    return (z2 * (int)pow(10, 2 * m)) + ((z1 - z2 - z0) * (int)pow(10, m)) + z0;}
+int main() {
+    int num1, num2;
+    printf("Enter first number: ");
+    scanf("%d", &num1);
+    printf("Enter second number: ");
+    scanf("%d", &num2);
+    printf("Product = %d\n", karatsuba(num1, num2));
+    return 0;}
+------MaxSubArray------
+struct maxsubarray {
+    int low;
+    int high;
+    int max;};
+struct maxsubarray find_cross_max(int a[10], int low, int mid, int high) {
+    int sum;
+    int left_sum = INT_MIN;
+    int right_sum = INT_MIN;
+    int max_left = mid, max_right = mid;
+    int i, j;
+    struct maxsubarray t;
+    sum = 0;
+    for (i = mid; i >= low; i--) {
+	sum += a[i];
+	if (sum > left_sum) {
+	    left_sum = sum;
+	    max_left = i;}}
+    sum = 0;
+    for (j = mid + 1; j <= high; j++) {
+	sum += a[j];
+	if (sum > right_sum) {
+	    right_sum = sum;
+	    max_right = j;}}
+    t.low = max_left;
+    t.high = max_right;
+    t.max = left_sum + right_sum;
+    return t;}
+struct maxsubarray find_max_sub(int a[10], int low, int high) {
+    int mid;
+    struct maxsubarray left, right, cross, t;
+    if (low == high) {
+	t.low = low;
+	t.high = high;
+	t.max = a[low];
+	return t;}
+    mid = (low + high) / 2;
+    left = find_max_sub(a, low, mid);
+    right = find_max_sub(a, mid + 1, high);
+    cross = find_cross_max(a, low, mid, high);
+    if (left.max >= right.max && left.max >= cross.max)
+	return left;
+    else if (right.max >= left.max && right.max >= cross.max)
+	return right;
+    else
+	return cross;}
+void main() {
+    int n, i;
+    int a[50];
+    struct maxsubarray s;
+    clrscr();
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
+    printf("Enter %d elements:\n", n);
+    for (i = 0; i < n; i++) {
+	scanf("%d", &a[i]);}
+    s = find_max_sub(a, 0, n - 1);
+    printf("\nMaximum Subarray is from index %d to %d\n", s.low, s.high);
+    printf("Maximum Sum = %d\n", s.max);
+
+    printf("Subarray elements: ");
+    for (i = s.low; i <= s.high; i++) {
+	printf("%d ", a[i]);}
+    getch();}
+------TwoWayMergeSort------
+void merge(int arr[],int l,int m,int r) {
+    int i,j,k;
+    int n1 = m - l + 1;
+    int n2 = r - m;
+    int X[10], Y[10];
+    for (i = 0; i < n1; i++)
+	X[i] = arr[l + i];
+    for (j = 0; j < n2; j++)
+	Y[j] = arr[m + 1 + j];
+    i = 0;
+    j = 0;
+    k = l;
+    while (i < n1 && j < n2) {
+	if (X[i] <= Y[j]) {
+	    arr[k] = X[i];
+	    i++;
+	} else {
+	    arr[k] = Y[j];
+	    j++;}
+	k++;}
+    while (i < n1) {
+	arr[k] = X[i];
+	i++;
+	k++;}
+    while (j < n2) {
+	arr[k] = Y[j];
+	j++;
+	k++;}}
+void mergeSort(int arr[], int l, int r) {
+    if (l < r) {
+	int m = (l + r) / 2;
+	mergeSort(arr, l, m);
+	mergeSort(arr, m + 1, r);
+	merge(arr, l, m, r);}}
+void main() {
+    int arr[50], n, i;
+    clrscr();
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
+    printf("Enter %d elements:\n", n);
+    for (i = 0; i < n; i++)
+    scanf("%d", &arr[i]);
+    mergeSort(arr, 0, n - 1);
+    printf("\nSorted array: ");
+    for (i = 0; i < n; i++)
+    printf("%d ", arr[i]);
+    getch();}
+------LCS------
+int max(int a, int b) {
+    return (a > b) ? a : b;}
+int lcs(char *X, char *Y, int m, int n) {
+    int L[100][100];
+    int i, j;
+    for (i = 0; i <= m; i++) {
+	for (j = 0; j <= n; j++) {
+	    if (i == 0 || j == 0)
+		L[i][j] = 0;
+	    else if (X[i - 1] == Y[j - 1])
+		L[i][j] = L[i - 1][j - 1] + 1;
+	    else
+		L[i][j] = max(L[i - 1][j], L[i][j - 1]);}}
+    return L[m][n];}
+void main() {
+    char X[100], Y[100];
+    int m, n;
+    clrscr();
+    printf("Enter first string: ");
+    scanf("%s", X);
+    printf("Enter second string: ");
+    scanf("%s", Y);
+    m = strlen(X);
+    n = strlen(Y);
+    printf("LengthofLongestCommonSubsequence is %d", lcs(X, Y, m, n));
+    getch();}
+------Recursive------
+int Binary(int a[], int low, int high, int s) {
+    int mid;
+    if (low > high)
+	return -1;
+    mid = (low + high) / 2;
+    if (s == a[mid])
+	return mid;
+    else if (s < a[mid])
+	return Binary(a, low, mid - 1, s);
+    else
+	return Binary(a, mid + 1, high, s);}
+void main() {
+    int a[100], n, i, s, result;
+    clrscr();
+    printf("Enter number elements: ");
+    scanf("%d", &n);
+    printf("Enter %d sorted elements:\n", n);
+    for (i = 0; i < n; i++) {
+	scanf("%d", &a[i]);}
+    printf("Enter element to search: ");
+    scanf("%d", &s);
+    result = Binary(a, 0, n - 1, s);
+    if (result == -1)
+	printf("Element not found in the array.\n");
+    else
+	printf("Element found at position %d (index %d).\n", result + 1, result);
+    getch();}
+------Power------
+long power(int base, int exp) {
+    long result = 1;
+    int i;
+    for (i = 1; i <= exp; i++) {
+        result = result * base;}
+    return result;}
+void main() {
+    int base, exp;
+    long result;
+    clrscr();
+    printf("Enter base: ");
+    scanf("%d", &base);
+    printf("Enter exponent: ");
+    scanf("%d", &exp);
+    result = power(base, exp);
+    printf("%d^%d = %ld", base, exp, result);
+    getch();}
+------Squreroot------
+void main() {
+    double num, result;
+    clrscr();
+    printf("Enter a number: ");
+    scanf("%lf", &num);
+    if (num < 0) {
+        printf("Square root of negative number is not real.");
+    } else {
+        result = sqrt(num);
+        printf("Square root of %.2lf = %.4lf", num, result);}
+    getch();}
+------Quik------
+void quick(int a[], int low, int high) {
+    int i = low, j = high, pivot = a[(low + high) / 2], temp;
+    while (i <= j) {
+        while (a[i] < pivot) i++;
+        while (a[j] > pivot) j--;
+        if (i <= j) {
+            temp = a[i]; a[i] = a[j]; a[j] = temp;
+            i++; j--;}}
+    if (low < j) quick(a, low, j);
+    if (i < high) quick(a, i, high);}
+void main() {
+    int a[50], n, i;
+    clrscr();
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
+    printf("Enter elements: ");
+    for (i = 0; i < n; i++) scanf("%d", &a[i]);
+    quick(a, 0, n - 1);
+    printf("Sorted array: ");
+    for (i = 0; i < n; i++) printf("%d ", a[i]);
+    getch();}
+------MultiAsAddition------
+void main() {
+    int a, b, i, result = 0;
+    clrscr();
+    printf("Enter first number: ");
+    scanf("%d", &a);
+    printf("Enter second number: ");
+    scanf("%d", &b);
+    for (i = 1; i <= b; i++) {
+        result = result + a;}
+    printf("%d x %d = %d", a, b, result);
+    getch();}
