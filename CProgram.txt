@@ -306,3 +306,35 @@ void main() {
         result = result + a;}
     printf("%d x %d = %d", a, b, result);
     getch();}
+--------iterative binary search-------
+int binarySearch(int arr[], int n, int s) {
+    int low = 0, high = n - 1, mid;
+    while (low <= high) {
+	mid = (low + high) / 2;
+	if (arr[mid] == s) {
+	    return mid;
+	} else if (s < arr[mid]) {
+	    high = mid - 1;
+	} else {
+	    low = mid + 1;
+	}    }
+   return -1;
+}
+void main() {
+    int arr[100], n, s, i, result;
+    clrscr();
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
+    printf("Enter %d sorted elements:\n", n);
+    for (i = 0; i < n; i++) {
+	scanf("%d", &arr[i]);
+    }
+    printf("Enter element to search: ");
+    scanf("%d", &s);
+    result = binarySearch(arr, n, s);
+    if (result == -1)
+	printf("Element not found.\n");
+    else
+	printf("Element found at position %d (index %d).\n", result + 1, result);
+    getch();
+}
