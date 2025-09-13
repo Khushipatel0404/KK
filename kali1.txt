@@ -177,3 +177,60 @@ User profiles
 
 password crek karva 
 >netsh wlan show profiles "KHUSHI 'S Phone" key="clear"
+
+THIS for Passive recon's :->
+
+whois ([who.is]register info and number info)
+nslookup [IP's find] OR ping
+dig (IP address)
+host (IP address)
+dnsenum (NS=name server,MX=Mail  Exchange server A-IPv4, AAAA-IPv6,TXT-text record)
+dnsrecon -d (NS=name server,MX=Mail  Exchange server A-IPv4, AAAA-IPv6,TXT-text record)  IN THIS -d MEANS DOMAIN
+theHarvester -d ljku.edu.in -b all (gather osint from search engines)
+dnsdumpster.com (For find an full architecture of websites or all active IP's in which countrys) THIS IS A WEBSITE(crome)
+
+Command:-
+ping ljku.edu.in
+whois ljku.edu.in
+
+sublist3r -d ljku.edu.in 
+
+sudo amass enum -d ljku.edu.in// kya kya server present chhe
+install --  sudo apt install sublist3r
+
+Nmap → Network Mapper
+🔹 It is an open-source tool used for network discovery and security auditing.
+
+NSE → Nmap Scripting Engine
+🔹 A feature of Nmap that allows users to write and use scripts for automating tasks such as vulnerability detection, 
+exploitation, and network discovery.
+
+nmap <ip>.* -sn  //which devic connect 
+nmap 10.0.2.* -sn // pachad na 15 add nai karvana 
+
+sudo nmap ljku.edu.in -O // which os use in targeted user
+Port Scanning::
+
+nmap<ip>  //which port available in this ip address // top 1000 ports
+
+nmap<ip> -p-   // scans all the port
+
+nmap<ip> -p 80,443 //(scan perticular parts)
+
+Service Version chack::
+sudo nmap <ip> -sV
+sudo nmap <ip> -sV -Pn
+
+namp --Traceroute ljku.edu.in
+namp ip -A (Aggressive Scane Perform   -O ,-sV , --Traceroute, -portScanning. -- NSE(data coolcation,verualability))
+
+namp Scripting Engine  ->  thi Find Valarbility Enumortaion
+
+nmap <ip> -v // vormance (backand ni process)
+nmap <ip> -vv
+
+nmap <ip> -Pn   // ping Request mokle ane direct scanning start(bypass)
+
+
+
+
