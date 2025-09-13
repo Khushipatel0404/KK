@@ -41,6 +41,20 @@ Use advanced Google dorking search operators to identify publicly exposed webcam
 passwords, sensitive files, internal documents, camera images, and mail logs related to the
 target’s domain or infrastructure.
 
+site:ljku.edu.in 
+site:ljku.edu.in inurl:database [specific word in url]
+site:ljku.edu.in filetype:pdf [specific file type]
+site:ljku.edu.in intext:chintan [specific word in]
+site:ljku.edu.in intext:chintan+mahipal [specific word in]
+site:ljku.edu.in intext:chintan -nayan [specific word hona chiye or - se nahi hone chiye]
+site:ljku.edu.in "index of/" "backup" [specific file]
+site:ljku.edu.in intitle:"index" "ftp"[specific file]
+config intitle
+exploit-db.com website [for any malicious present query]
+dorksearch.com[for find any malicious file]
+index.of.dcim [for cam access]
+intext webcam x5 [for cam access]
+
 site: → Restrict results to a specific domain or subdomain.
 inurl: → Search for keywords within a page’s URL.
 allinurl: → Search for multiple terms within the URL.
@@ -239,4 +253,5 @@ hping3 -S -p 80 -i u1000 192.168.1.1
 hping3 -S --flood -p 80 192.168.1.100
 
 -V Verbose output 
+
 hping3 -S -V -p 80 192.168.1.1
