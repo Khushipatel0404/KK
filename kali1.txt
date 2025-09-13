@@ -105,3 +105,75 @@ sudo hping3 -S  192.168.0.82  -a </ip address of kali linux> 10.176.253.67
 ===================================================================================================================
 extra
 https://soclibrary.fuda.edu.ng
+
+System command::
+dir:: directory show 
+systeminfo :: information gethering our targeting sysytem
+cd : change directory
+cd ..   ::: back to return folder/file
+mkdir  :: make directory
+rmdir :: delete directory
+cls : clear screen
+make taxt file::
+
+echo this is a lab > lab.txt
+
+read a file ::
+
+type lab.txt
+
+cd/::: command is direct start c drive
+
+find a word in text file :
+find "manual" lab.txt
+
+find "manual" *.txt
+
+Tasklist ::use a which application running our pc
+
+taskkill :: use a opne a application to close a file
+
+taskkill /IM wordpad.exe
+
+
+
+
+
+Network Command:::::;
+
+ipconfig::chack ip address
+ipconfig/all ::chack all connation
+
+ping: find ip address 
+
+tracert google.com ::
+server joi sakai ketala chhe a
+
+netstat :: tamaru device sathe connation chhe 
+
+
+
+C:\Users\kunda\OneDrive\Documents>netsh wlan show profiles
+
+Profiles on interface Wi-Fi:
+
+Group policy profiles (read only)
+---------------------------------
+    <None>
+
+User profiles
+-------------
+    All User Profile     : KHUSHI 'S Phone
+    All User Profile     : moto g(30)_6273
+    All User Profile     : OnePlus Nord CE 2
+    All User Profile     : moto g62 5G
+    All User Profile     : V2027
+    All User Profile     : JioFi_211274F
+    All User Profile     : Galaxy A15 5G 0197
+    All User Profile     : BHAVYA_4G
+    All User Profile     : Galaxy A21s946A
+    All User Profile     : Simplysalad43_4G
+
+
+password crek karva 
+>netsh wlan show profiles "KHUSHI 'S Phone" key="clear"
