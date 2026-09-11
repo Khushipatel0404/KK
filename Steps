@@ -1,0 +1,98 @@
+Practical 1: FTK IMAGE
+1. Download and install FTK Imager from the official Exterro website.
+2.Open The FTK
+3. Go to File → Create Disk Image.
+4. Select the Logical Drive
+5. Select the Drive path next Choose the specific source drive from the list and click Finish.
+6. Click Add
+7.choose RAW (dd).
+8. Enter case details.
+8. Choose a destination folder and Finish
+9.Ensure Verify images after they are created is checked
+10. Open FTK Imager.
+11. Go to File → Image Mounting.
+12. Click Browse and select the forensic image file.
+13. Choose the Mount Type Logical.
+14. Click Mount.
+15. Browse the mounted drive to view its files and folders as read-only evidence.
+16. When finished, return to Image Mounting and click Unmount to safely detach the image
+
+Practical 2: Checking the File System of a Drive[NTFS or FAT32]
+Method 1: Using File Explorer
+1. Open This PC in Disk management.
+2. Right-click on Local Disk (C:) (or the drive to be checked).
+3. Select Properties.
+4. On the General tab, look at the File system field to see the format in use (for example, NTFS).
+Practical 2.1: Viewing NTFS MACB Timestamps
+1. Open Command Prompt
+2. dir /T:C [Creation]
+3. dir /T:W [Written]
+4. dir /T:A [Accessed]
+Practical 2.2: Viewing the NTFS USN Journal
+1. Open Command Prompt as Administrator.
+2. fsutil usn queryjournal C:
+3. fsutil usn readjournal C:
+
+Practical 3:Checking Evidence Integrity Using MD5
+1. https://md5file.com/calculator
+2. Create a Doc File .
+3. Upload this file in web[md5file.com]
+4. Minore change of this file
+5. Reupload this file in web[md5file.com]
+6. Check MD5, SHA-256, and SHA-512
+
+Practical 4: DUMP IT
+0. Make Folder name Memory_Forensic
+1. Download Magnet DumpIt [https://www.magnetforensics.com/resources/magnet-dumpit-for-windows/]
+2. extract then change folder name to Magnet_Dumpit
+3. Go extracts ->go X64->Run DumpIt.exe
+4. Auto open in CMD click Y and copy the Destination Path
+4. After Y Auto generated dump file
+5. Download Volatility 3 Github: https://github.com/volatilityfoundation/volatility3
+6. Extract the ZIP then put in Memory_Forensic folder
+7. go to Magnet_Dumpit Ctrl+X the .dmp file put in Memory_Forensic folder
+8. Now in Memory_Forensic folder have two folder one file [Magnet_Dumpit, volatility3, .dmp]
+9. one more file make in Memory_Forensic called training_malware.py [IF THEY WANT MALWARE]
+Import time import os print("TRAINING MALWARE SIMULATION")
+print("This program is harmless.")
+print("PID:", os.getpid())
+while True:
+time.sleep(10)
+Open Memory_Forensic in CMD run python training_malware.py
+10.open the volatility3 folder in CMD
+11.Commands:
+ dir vol.py
+ python vol.py -f "C:\Memory_Forensic\filename.dmp" windows.info
+ python vol.py -f "C:\Memory_Forensic\filename.dmp" windows.pslist
+ python vol.py -f "C:\Memory_Forensic\filename.dmp" windows.psscan
+ python vol.py -f "C:\Memory_Forensic\filename.dmp" windows.pstree
+ python vol.py -f "C:\Memory_Forensic\filename.dmp" windows.netscan [pip install pefile pycryptodome ]
+ python vol.py -f "C:\Memory_Forensic\filename.dmp" windows.cmdline
+ python vol.py -f "C:\Memory_Forensic\filename.dmp" windows.dlllist --pid 11740 [in this take PID what you want to investigate]
+ python vol.py -f "C:\Memory_Forensic\filename.dmp" windows.malfind
+ python vol.py -f "C:\Memory_Forensic\filename.dmp" windows.svcscan
+12.python vol.py -f " C:\Memory_Forensic\filename.dmp" windows.info> "path\where\to\save \info.txt" 2>&1 [Exporting Volatility Analysis
+Output for Reporting]
+[
+IF have error in belows command THEN run that command in CMD
+set HTTP_PROXY=http://192.168.10.253:808
+set HTTPS_PROXY=http://192.168.10.253:808
+]
+
+Practical 5: Creating and Analyzing a Disk Forensic Image Using Autopsy
+1. Download and install Autopsy from the official website (https://www.autopsy.com/).
+2. Create New Case[Add Information]-> Next
+3. Optional information pop up -> click -> manage Organization-> finish
+4. Add new organization -> click -> ok -> organization select -> close -> finish
+5. Select host : generate new host name based on data source name [select]-> Next
+6. Select Local host
+7. Select Disk and click next -> finish
+8. Recover delete file -> all file -> right click -> Extract file -> select path -> ok
+
+Practical 6 : Network Forensics — Analyzing a PCAP File Using Wireshark
+1. https://www.wireshark.org/
+2. Wi fi start
+3. http://zero.webappsecurity.com/login.html
+4. select a this web and new tab past
+5. login this website
+6. capture the port [http]
